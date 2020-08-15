@@ -18,15 +18,15 @@ type
     ubah: TButton;
     hapus: TButton;
     nama: TLabeledEdit;
-    gender: TComboBox;
-    alamat: TMemo;
-    simpan: TButton;
-    ulang: TButton;
     id: TEdit;
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
     ADOTable1: TADOTable;
     umur: TLabeledEdit;
+    gender: TComboBox;
+    alamat: TMemo;
+    simpan: TButton;
+    ulang: TButton;
     procedure Fill1LabeledEdit;
     procedure GridSelectCell(Sender : TObject; ACol, ARow : Integer; Var CanSelect : Boolean);
     procedure FormCreate(Sender: TObject);
@@ -38,6 +38,7 @@ type
     procedure ubahClick(Sender: TObject);
     procedure StringGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
+    procedure ulangClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -138,10 +139,10 @@ begin
       while not Eof do
       begin
         StringGrid1.Cells[0, RecNo] := FieldByName('ID').AsString;
-        StringGrid1.Cells[2, RecNo] := FieldByName('nama').AsString;
-        StringGrid1.Cells[4, RecNo] := FieldByName('umur').AsString;
+        StringGrid1.Cells[1, RecNo] := FieldByName('nama').AsString;
+        StringGrid1.Cells[2, RecNo] := FieldByName('umur').AsString;
         StringGrid1.Cells[3, RecNo] := FieldByName('gender').AsString;
-        StringGrid1.Cells[5, RecNo] := FieldByName('alamat').AsString;
+        StringGrid1.Cells[4, RecNo] := FieldByName('alamat').AsString;
         Next;
       end;
       StringGrid1.Row := NoRec;
@@ -257,6 +258,14 @@ begin
     gender.Text := '';
     alamat.Text := '';
   end;
+end;
+
+procedure TForm1.ulangClick(Sender: TObject);
+begin
+  nama.Text := '';
+  umur.Text := '';
+  gender.Text := 'Pilih';
+  alamat.Text := '';
 end;
 
 end.

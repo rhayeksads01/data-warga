@@ -157,65 +157,6 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 5
   end
-  object gender: TComboBox
-    Left = 32
-    Top = 292
-    Width = 265
-    Height = 27
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Calibri'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 6
-    Text = 'Pilih'
-  end
-  object alamat: TMemo
-    Left = 32
-    Top = 362
-    Width = 265
-    Height = 97
-    HelpType = htKeyword
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Calibri'
-    Font.Style = []
-    HideSelection = False
-    ParentFont = False
-    ScrollBars = ssBoth
-    TabOrder = 7
-  end
-  object simpan: TButton
-    Left = 40
-    Top = 482
-    Width = 89
-    Height = 32
-    Caption = 'Simpan'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Consolas'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 8
-    OnClick = simpanClick
-  end
-  object ulang: TButton
-    Left = 200
-    Top = 482
-    Width = 89
-    Height = 32
-    Caption = 'Ulang'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Consolas'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 9
-  end
   object id: TEdit
     Left = 32
     Top = 86
@@ -230,7 +171,7 @@ object Form1: TForm1
     ParentShowHint = False
     ReadOnly = True
     ShowHint = False
-    TabOrder = 10
+    TabOrder = 6
     Text = 'ID'
   end
   object umur: TLabeledEdit
@@ -253,7 +194,67 @@ object Form1: TForm1
     Font.Name = 'Calibri'
     Font.Style = []
     ParentFont = False
+    TabOrder = 7
+  end
+  object gender: TComboBox
+    Left = 32
+    Top = 292
+    Width = 265
+    Height = 27
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Calibri'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 8
+    Text = 'Pilih'
+  end
+  object alamat: TMemo
+    Left = 32
+    Top = 362
+    Width = 265
+    Height = 97
+    HelpType = htKeyword
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Calibri'
+    Font.Style = []
+    HideSelection = False
+    ParentFont = False
+    ScrollBars = ssBoth
+    TabOrder = 9
+  end
+  object simpan: TButton
+    Left = 40
+    Top = 482
+    Width = 89
+    Height = 32
+    Caption = 'Simpan'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Consolas'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 10
+    OnClick = simpanClick
+  end
+  object ulang: TButton
+    Left = 200
+    Top = 482
+    Width = 89
+    Height = 32
+    Caption = 'Ulang'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Consolas'
+    Font.Style = [fsBold]
+    ParentFont = False
     TabOrder = 11
+    OnClick = ulangClick
   end
   object ADOConnection1: TADOConnection
     Connected = True
