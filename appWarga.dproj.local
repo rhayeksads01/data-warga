@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/08/06 22:54:49.000.391,=C:\Users\rhayeksa\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/08/06 22:56:10.000.513,=C:\Users\rhayeksa\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/08/06 22:56:59.000.611,=C:\Users\rhayeksa\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/08/15 16:32:00.629,=C:\Users\rhayeksa\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/08/15 16:33:21.198,C:\Users\rhayeksa\Desktop\delphi_projects\data-warga\codeWarga.pas=C:\Users\rhayeksa\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/08/15 16:33:21.198,C:\Users\rhayeksa\Desktop\delphi_projects\data-warga\codeWarga.dfm=C:\Users\rhayeksa\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2020/08/15 16:33:29.380,C:\Users\rhayeksa\Desktop\delphi_projects\data-warga\appWarga.dproj=C:\Users\rhayeksa\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

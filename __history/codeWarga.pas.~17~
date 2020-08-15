@@ -1,0 +1,206 @@
+﻿unit codeWarga;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.Win.ADODB, Data.DB,
+  Vcl.ExtCtrls, Vcl.Grids;
+
+type
+  TForm1 = class(TForm)
+    Label1: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    StringGrid1: TStringGrid;
+    pencarian: TEdit;
+    btn_cari: TButton;
+    ubah: TButton;
+    hapus: TButton;
+    nama: TLabeledEdit;
+    gender: TComboBox;
+    alamat: TMemo;
+    simpan: TButton;
+    ulang: TButton;
+    id: TEdit;
+    ADOConnection1: TADOConnection;
+    ADOQuery1: TADOQuery;
+    ADOTable1: TADOTable;
+    umur: TLabeledEdit;
+    procedure Fill1LabeledEdit;
+    procedure GridSelectCell(Sender : TObject; ACol, ARow : Integer; Var CanSelect : Boolean);
+    procedure FormCreate(Sender: TObject);
+    procedure btn_cariClick(Sender: TObject);
+    procedure pencarianChange(Sender: TObject);
+    procedure pencarianClick(Sender: TObject);
+    procedure simpanClick(Sender: TObject);
+    procedure hapusClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.GridSelectCell(Sender : TObject; ACol, ARow : Integer; Var CanSelect : Boolean);
+begin
+  ADOTable1.RecNo := ARow;
+  Fill1LabeledEdit;
+end;
+
+procedure TForm1.Fill1LabeledEdit;
+begin
+  with ADOTable1 do
+  begin
+    ID.Text := FieldByName('ID').AsString;
+    nama.Text := FieldByName('nama').AsString;
+    umur.Text := FieldByName('umur').AsString;
+    gender.Text := FieldByName('gender').AsString;
+    alamat.Text := FieldByName('alamat').AsString;
+  end;
+end;
+
+
+procedure TForm1.btn_cariClick(Sender: TObject);
+begin
+  if ADOTable1.Locate(
+    'nama',
+    pencarian.Text,
+    [loCaseInsensitive,loPartialKey]) then
+    begin
+      StringGrid1.Row := ADOTable1.RecNo;
+    end;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  id.Hide;
+  with ADOTable1 do
+  begin
+    StringGrid1.RowCount := RecordCount + 1;
+    StringGrid1.ColCount := 5;
+    while not Eof do
+    begin
+      StringGrid1.Cells[0, RecNo] := FieldByName('ID').AsString;
+      StringGrid1.Cells[1, RecNo] := FieldByName('nama').AsString;
+      StringGrid1.Cells[2, RecNo] := FieldByName('umur').AsString;
+      StringGrid1.Cells[3, RecNo] := FieldByName('gender').AsString;
+      StringGrid1.Cells[4, RecNo] := FieldByName('alamat').AsString;
+      Next;
+    end;
+  end;
+  StringGrid1.Cells[0, 0] := 'ID';
+  StringGrid1.Cells[1, 0] := 'Nama';
+  StringGrid1.Cells[2, 0] := 'Umur';
+  StringGrid1.Cells[3, 0] := 'Gender';
+  StringGrid1.Cells[4, 0] := 'Alamat';
+
+  StringGrid1.ColWidths[0] := 90;
+  StringGrid1.Colwidths[1] := 150;
+  StringGrid1.Colwidths[2] := 100;
+  StringGrid1.ColWidths[3] := 120;
+  StringGrid1.ColWidths[4] := 220;
+
+  pencarian.Font.Color := clGrayText;
+end;
+
+procedure TForm1.hapusClick(Sender: TObject);
+var NoRec: Integer;
+begin
+  if MessageDlg('Apakah anda yakin ingin menghapus record tersebut...? 🤔', mtConfirmation, mbOKCancel, 0) = mrOk then
+  begin
+    with ADOTable1 do
+    begin
+      NoRec := RecNo;
+      ADOTable1.Delete;
+      if NoRec <= RecordCount then
+        RecNo := NoRec
+        else
+        begin
+          RecNo := RecordCount;
+          NoRec := RecNo;
+        end;
+    end;
+    StringGrid1.RowCount := ADOTable1.RecordCount + 1;
+    with ADOTable1 do
+    begin
+      StringGrid1.RowCount := RecordCount + 1;
+      First;
+      while not Eof do
+      begin
+        StringGrid1.Cells[0, RecNo] := FieldByName('ID').AsString;
+        StringGrid1.Cells[1, RecNo] := FieldByName('nisn').AsString;
+        StringGrid1.Cells[2, RecNo] := FieldByName('nama').AsString;
+        StringGrid1.Cells[3, RecNo] := FieldByName('gender').AsString;
+        StringGrid1.Cells[4, RecNo] := FieldByName('ekskul').AsString;
+        StringGrid1.Cells[5, RecNo] := FieldByName('alamat').AsString;
+        Next;
+      end;
+      StringGrid1.Row := NoRec;
+      RecNo := NoRec;
+    end;
+    Fill1LabeledEdit;
+  end;
+end;
+
+procedure TForm1.pencarianChange(Sender: TObject);
+begin
+  pencarian.Font.Color := clBlack;
+end;
+
+procedure TForm1.pencarianClick(Sender: TObject);
+begin
+  pencarian.Text := '';
+end;
+
+procedure TForm1.simpanClick(Sender: TObject);
+begin
+  try
+    with ADOQuery1 do
+    begin
+      SQL.Text := 'insert into tbl_warga(nama, umur, gender, alamat)' +
+                  'values(:nama, :umur, :gender, :alamat)';
+      with parameters do
+      begin
+        ParamByName('nama').Value := nama.Text;
+        ParamByName('umur').Value := umur.Text;
+        ParamByName('gender').Value := gender.Text;
+        ParamByName('alamat').Value := alamat.Text;
+      end;
+      ExecSQL;
+    end;
+  except
+    on E:Exception do
+    begin
+      MessageDlg(E.Message,mtERROR,[mbOK],0);
+    end;
+  end;
+    ADOTable1.Close;
+    ADOTable1.Open;
+    ADoTable1.Last;
+
+    StringGrid1.RowCount := ADOTable1.RecordCount + 1;
+    with ADOTable1 do
+    begin
+      StringGrid1.RowCount := RecordCount + 1;
+      First;
+      while not Eof do
+      begin
+        StringGrid1.Cells[0, RecNo] := FieldByName('ID').AsString;
+        StringGrid1.Cells[1, RecNo] := FieldByName('nama').AsString;
+        StringGrid1.Cells[2, RecNo] := FieldByName('umur').AsString;
+        StringGrid1.Cells[3, RecNo] := FieldByName('gender').AsString;
+        StringGrid1.Cells[4, RecNo] := FieldByName('alamat').AsString;
+        Next;
+      end;
+      StringGrid1.Row := RecNo;
+    end;
+end;
+
+end.
